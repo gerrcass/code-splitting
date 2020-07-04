@@ -1,3 +1,21 @@
+/* 
+This is another way to do code splitting, but component level code splitting (not just route centric)..
+
+https://github.com/jamiebuilds/react-loadable
+import Loadable from 'react-loadable';
+import Loading from './my-loading-component';
+
+const LoadableComponent = Loadable({
+  loader: () => import('./my-component'),
+  loading: Loading,
+});
+
+export default class App extends React.Component {
+  render() {
+    return <LoadableComponent/>;
+  }
+} */
+
 import React from "react";
 import "./App.css";
 
