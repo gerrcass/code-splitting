@@ -16,11 +16,14 @@ export default class App extends React.Component {
   }
 } */
 
-import React from "react";
+import React, { Suspense } from "react";
 import "./App.css";
 
 import Page1 from "./PageOne";
-import AsyncComponent from "./AsyncComponent";
+//import AsyncComponent from "./AsyncComponent";
+
+const Page2lazy = React.lazy(() => import("./PageTwo.js"));
+const Page3lazy = React.lazy(() => import("./PageThree.js"));
 
 class App extends React.Component {
   constructor() {
@@ -52,11 +55,21 @@ class App extends React.Component {
       case "page1":
         return <Page1 onChangeRoute={this.onChangeRoute} />;
       case "page2":
-        const AsyncPage2 = AsyncComponent(() => import("./PageTwo"));
-        return <AsyncPage2 onChangeRoute={this.onChangeRoute} />;
+        /* const AsyncPage2 = AsyncComponent(() => import("./PageTwo"));
+        return <AsyncPage2 onChangeRoute={this.onChangeRoute} />; */
+        return (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Page2lazy onChangeRoute={this.onChangeRoute} />
+          </Suspense>
+        );
       case "page3":
-        const AsyncPage3 = AsyncComponent(() => import("./PageThree"));
-        return <AsyncPage3 onChangeRoute={this.onChangeRoute} />;
+        /* const AsyncPage3 = AsyncComponent(() => import("./PageThree"));
+        return <AsyncPage3 onChangeRoute={this.onChangeRoute} />; */
+        return (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Page3lazy onChangeRoute={this.onChangeRoute} />
+          </Suspense>
+        );
       default:
         return "";
     }
